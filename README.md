@@ -1,3 +1,6 @@
+# NAME: NAVEEN JAISANKER
+# REG. NO. : 212224110039
+
 # EX-NO-13-MESSAGE-AUTHENTICATION-CODE-MAC
 
 ## AIM:
@@ -26,9 +29,43 @@ To implement MESSAGE AUTHENTICATION CODE(MAC)
 
 ## Program:
 
-
+```
+#include <stdio.h>
+#include <string.h>
+#define MAC_SIZE 32
+void computeMAC(const char *key, const char *msg, char *mac) {
+ int klen = strlen(key), mlen = strlen(msg);
+ for (int i = 0; i < MAC_SIZE; i++) {
+ mac[i] = key[i % klen] ^ msg[i % mlen];
+ }
+}
+int main() {
+ char key[100], msg[100], mac[MAC_SIZE], recvMAC[MAC_SIZE];
+ printf("Enter secret key: ");
+ scanf("%s", key);
+ printf("Enter message: ");
+ scanf("%s", msg);
+ computeMAC(key, msg, mac);
+ printf("Generated MAC (hex): ");
+ for (int i = 0; i < MAC_SIZE; i++) {
+ printf("%02x", (unsigned char)mac[i]);
+ }
+ printf("\n");
+ printf("Enter received MAC (hex): ");
+ for (int i = 0; i < MAC_SIZE; i++) {
+ scanf("%2hhx", &recvMAC[i]);
+ }
+ if (memcmp(mac, recvMAC, MAC_SIZE) == 0) {
+ printf("MAC verified. Message is authentic.\n");
+ } else {
+ printf("MAC mismatch. Message is not authentic.\n");
+ }
+ return 0;
+}
+```
 
 ## Output:
+<img width="1036" height="536" alt="image" src="https://github.com/user-attachments/assets/4d8f58bf-d108-4f22-a9db-76ee61cbc861" />
 
 
 ## Result:
